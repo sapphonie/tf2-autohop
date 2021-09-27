@@ -1,3 +1,6 @@
+// we skip clamping velocity when bunny jumping by always JMPing (instead of only jumping if a condition is met)
+// to the end of the function and not changing the velocity we came into it with
+// a jump for a jump i guess :p
 "Games"
 {
     "tf"
@@ -6,12 +9,16 @@
         {
             "NoPreventBunnyJumping"
             {
-                "signature"         "PreventBunnyJumping"
+                "signature"     "PreventBunnyJumping"
                 "linux"
                 {
-                    "offset"	    "27h"
-                    "verify"        "\x75"
-                    "patch"         "\xEB"
+                    "offset"    "27h"
+
+                //  +27          75 72     jnz     short loc_7CC40B
+                    "verify"    "75 72"
+
+                //  +27          EB 72     jmp     short loc_7CC40B
+                    "patch"     "EB 72"
                 }
             }
         }
